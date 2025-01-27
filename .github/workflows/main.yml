@@ -37,3 +37,21 @@ jobs:
           pip install pytest scikit-learn
       - name: Run tests
         run: pytest tests/
+
+  build-docker:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Build the Docker image
+      - name: Build Docker image
+        run: docker build -t mlops-assignment-model:latest .
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build-docker
+    steps:
+      - name: deployment
+        run: echo "The Docker image has been built successfully. Ready for deployment!"
